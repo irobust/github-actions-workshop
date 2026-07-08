@@ -13,7 +13,7 @@
 
     ```yaml
     name: Hello Workflow
-    on: [push]
+    on: push
     jobs:
         hello-job:
             runs-on: ubuntu-latest
@@ -47,27 +47,6 @@
           - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub."
     ```
 
-### Checkout source code from repository
-1. Checkout code
-    ```yaml
-    steps
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      
-      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
-      
-      - run: echo "Your repository has been copied to the path ${{ github.workspace }} on the runner."
-      
-      - run: echo "The workflow is now ready to test your code on the runner."
-    ```
-
-1. Access files in source code directory
-    ```yaml
-    - name: List files in the repository
-      run: |
-        ls ${{ github.workspace }}
-    ```
-
 ### Trigers and Events filtering
 1. Update triggers to accept push and pull request events
     ```yaml
@@ -85,8 +64,8 @@
 1. Accept triggers from third-party
     ```yaml
     on:
-        workflow_dispatch:
-            types: [my_event_type]
+        repository_dispatch:
+            types: [after_render_cms]
     ```
 1. Display payload data from third-party request
     ```yaml
@@ -96,7 +75,8 @@
 1. Send Request to triiger workflow
     * Generate Personal Access Token: Goto **Profile** > **Settings** > **Developer Settings** > **Personal Access Tken** > **Generate new Tkoken**
     * Set name of Token
-    * Add permission to **Read public repo** and **Generate Token**
+    * Choose **fine-grain permission**
+    * Add permission to **Read-Write** Contents,Workflow and Action
     * Copy Token
     * Create new request in Postman
     * Choose **POST** method
@@ -106,9 +86,9 @@
     * Set body to
         ```json
         {
-            "event-type": "my_event_type",
+            "event_type": "after_render_cms",
             "client_payload": {
-                "mydata": "Testing send data"
+                "status": "completed"
             }
         }
         ```
@@ -166,6 +146,27 @@
 1. Write a workflow step to consume it
     ```yaml
     - run: echo "The password is ${{ secrets.DB_PASSWORD }}"
+    ```
+## Working with source code
+### Checkout source code from repository
+1. Checkout code
+    ```yaml
+    steps
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      
+      - run: echo "Your repository has been copied to the path ${{ github.workspace }} on the runner."
+      
+      - run: echo "The workflow is now ready to test your code on the runner."
+    ```
+
+1. Access files in source code directory
+    ```yaml
+    - name: List files in the repository
+      run: |
+        ls ${{ github.workspace }}
     ```
 
 

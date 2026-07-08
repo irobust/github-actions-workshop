@@ -107,7 +107,7 @@ This gives the workflow permission to write test results to the Actions interfac
 
     ```yaml
     - name: Test with pytest
-    run: |
+      run: |
         pytest
     ```
 
@@ -115,12 +115,12 @@ This gives the workflow permission to write test results to the Actions interfac
 
     ```yaml
     - name: Test with pytest
-    run: |
+      run: |
         python -m pytest --verbose --junit-xml=junit.xml
     - name: Publish Test Report
-    uses: mikepenz/action-junit-report@v3
-    if: success() || failure()
-    with:
+      uses: mikepenz/action-junit-report@v3
+      if: success() || failure()
+      with:
         report_paths: '**/junit.xml'
         detailed_summary: true
         include_passed: true
@@ -148,8 +148,3 @@ You should now a chart of passed, failed, and skipped tests displayed directly o
 ### Summary
 
 Most modern test frameworks can produce JUnit reports, making this approach a powerful way to improve visibility and feedback in your CI pipelines.
-
-<!-- FooterStart -->
----
-[← 01_02 Set Up CI for Javascript](../01_02_ci_for_javascript/README.md) | [01_04 Set Up CI for Go →](../01_04_ci_for_go/README.md)
-<!-- FooterEnd -->
