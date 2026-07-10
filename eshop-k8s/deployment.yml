@@ -1,6 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: eshoponweb-phanupong
+  
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: eshoponweb-phanupong
   name: webapp
   labels:
     app: sample-app
@@ -17,7 +24,7 @@ spec:
     spec:
       containers:
         - name: webapp
-          image: acrnm02test.azurecr.io/webapp:v1
+          image: aistraining.azurecr.io/eshoponweb-019:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
